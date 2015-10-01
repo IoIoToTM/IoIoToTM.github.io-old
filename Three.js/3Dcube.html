@@ -4,11 +4,12 @@
 	<title>3D WebGL</title>
 </head>
 <body>
+<input type="button" onclick="location.href='../index.html';" value="Index" />
 
 <script type="text/javascript" src="three.min.js"></script>
 <script type="text/javascript">
 	var camera, scene, renderer,
-    geometry, material, mesh;
+    geometry, material, mesh,geometry1, material1, mesh1 ,geometry2, material2, mesh2,geometry3, material3, mesh3,geometry4, material4, mesh4,geometry5, material5, mesh5;
 
     init();
     animate();
@@ -21,10 +22,37 @@
         camera.position.z = 1000;
 
         geometry = new THREE.BoxGeometry( 200, 200, 200 );
-        material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true } );
+        material = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true } );
+
+        geometry1 = new THREE.BoxGeometry( 100, 100, 100 );
+        material1 = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: true } );
+
+        geometry2 = new THREE.BoxGeometry( 300, 300, 300 );
+        material2 = new THREE.MeshBasicMaterial( { color: 0x0000ff, wireframe: true } );
+
+        geometry3 = new THREE.BoxGeometry( 400, 400, 400 );
+        material3 = new THREE.MeshBasicMaterial( { color: 0xffff00, wireframe: true } );
+
+        geometry4 = new THREE.BoxGeometry( 500, 500, 500 );
+        material4 = new THREE.MeshBasicMaterial( { color: 0x00ffff, wireframe: true } );
+
+        geometry5 = new THREE.BoxGeometry( 600, 600, 600 );
+        material5 = new THREE.MeshBasicMaterial( { color: 0xff00ff, wireframe: true } );
+
 
         mesh = new THREE.Mesh( geometry, material );
+        mesh1 = new THREE.Mesh( geometry1, material1 );
+        mesh2 = new THREE.Mesh( geometry2, material2 );
+        mesh3 = new THREE.Mesh( geometry3, material3 );
+        mesh4 = new THREE.Mesh( geometry4, material4 );
+        mesh5 = new THREE.Mesh( geometry5, material5 );
+
         scene.add( mesh );
+        scene.add( mesh1 );
+        scene.add( mesh2 );
+        scene.add( mesh3 );
+        scene.add( mesh4 );
+        scene.add( mesh5 );
 
         renderer = new THREE.WebGLRenderer();
         renderer.setSize( window.innerWidth, window.innerHeight );
@@ -42,6 +70,21 @@
     {
         mesh.rotation.x += 0.01;
         mesh.rotation.y += 0.02;
+
+        mesh1.rotation.x += 0.01;
+        mesh1.rotation.y += 0.02;
+
+        mesh2.rotation.x += 0.01;
+        mesh2.rotation.y += 0.02;
+
+        mesh3.rotation.x += 0.01;
+        mesh3.rotation.y += 0.02;
+
+        mesh4.rotation.x += 0.01;
+        mesh4.rotation.y += 0.02;
+
+        mesh5.rotation.x += 0.01;
+        mesh5.rotation.y += 0.02;
 
         renderer.render( scene, camera );
     }
