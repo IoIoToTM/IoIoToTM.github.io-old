@@ -1,0 +1,340 @@
+<html>
+	<head>
+		<title>Rectangle</title>
+	</head>
+	<body onload="start()" bgcolor=white>
+	<button id="gravityButton" type="button" onclick="toggleGravity()">Disable/Enable Gravity</button>
+	<button id="bounceButton" type="button" onclick="toggleBounce()">Disable/Enable Bounciness</button>
+	<button id="boundaryButton" type="button" onclick="toggleBoundary()">Disable/Enable Boundaries</button>
+	<input type="button" onclick="location.href='test/3d.html';" value="WebGL" />
+	<h1><i>Rectangle in Rectangle</i></h1>
+
+		<canvas id="kvadrat" width=700 height=500 style="border:2px solid #000000;"></canvas>
+		
+		<script type="text/javascript">
+
+				var canvas = document.getElementById( "kvadrat");
+    			var context = canvas.getContext( "2d" );
+
+    			context.fillStyle="#FF0000";
+
+				var rectSize=50;
+				var rectX=50;
+				var rectY=20;
+				var acceleration=0.3;
+
+				var gravity=0.4;
+				var friction=0.05;
+
+				var inertiaX=0;
+				var inertiaY=0;
+
+				var moveUp=false;
+				var moveDown=false;
+				var moveLeft=false;
+				var moveRight=false;
+
+				var mouseClick=false;
+				var mouseX = 0;
+				var mouseY = 0;
+
+				var gravityEnabled=true;
+				var bounceEnabled=false;
+				var boundary=true;
+
+				var inAir = true;
+
+				var screenWidth=canvas.width;
+				var screenHeight=canvas.height;
+
+				function start()
+				{
+					document.addEventListener( "keydown", doKeyDown, false);
+   					document.addEventListener( "keyup",   doKeyUp,   false);
+   					document.addEventListener("mousedown",mouseDown     ,false);
+   					document.addEventListener("mouseup",mouseUp     ,false);
+					window.requestAnimationFrame(doStuff);
+				}
+				function doStuff()
+				{
+    				context.clearRect( 0, 0, screenWidth, screenHeight );
+
+    				if(moveUp)
+	    				{
+	    					inertiaY-=2*acceleration;
+	    				}
+	    			if(moveDown)
+	    				{
+	    					inertiaY+=2*acceleration;
+	    				}
+	    			if(moveLeft)
+	    				{
+	    					if(gravityEnabled==false)
+	    					{
+	    						inertiaX-=2*acceleration;
+	    					}
+	    					else if(inAir)
+	    					{
+	    						inertiaX-=1.5*acceleration;
+	    					}
+	    				}
+	    			if(moveRight)
+	    				{
+	    					if(gravityEnabled==false)
+	    					{
+	    						inertiaX+=2*acceleration;
+	    					}
+	    					else 
+	    						{
+	    							if(inAir)
+	    							{
+	    								inertiaX+=2*acceleration;
+	    							}
+	    							else inertiaX+=1.5*acceleration;
+	    						}	
+	    				}
+					if(moveLeft)
+	    			{
+	    				if(gravityEnabled==false)
+	    				{
+	    					inertiaX-=2*acceleration;
+	    				}
+	    				else 
+	    					{
+	    						if(inAir)
+	    						{
+	    							inertiaX-=2*acceleration;
+	    						}
+	    						else inertiaX-=1.5*acceleration;
+	    					}	
+	    			}
+	    			if(gravityEnabled)
+	    			{
+	    				inertiaY+=gravity;
+	    				if(inAir==false&&inertiaX<0)
+	    				{
+	    					inertiaX+=friction;
+	    				}
+	    				if(inAir==false&&inertiaX>0)
+	    				{
+	    					inertiaX-=friction;
+	    				}
+	    			}
+
+	    			rectY+=inertiaY;
+
+	    			rectX+=inertiaX;
+
+	    			if(rectX<0)
+	    			{
+	    				if(boundary)
+	    				{
+	    					if(bounceEnabled==true)
+	    					{
+	    						inertiaX=-inertiaX;
+	    					}
+	    					else
+	    					{
+	    						rectX=0;
+	    						inertiaX=0;
+	    					}
+	    				}
+	    				else
+	    				{
+	    					rectX=screenWidth-rectSize;
+	    				}
+	    			}
+	    			if(rectX+rectSize>screenWidth)
+	    			{
+	    				if(boundary)
+	    				{
+	    					if(bounceEnabled==true)
+	    					{
+	    						inertiaX=-inertiaX;
+	    					}
+	    					else
+	    					{
+	    						rectX=screenWidth-rectSize;
+	    						inertiaX=0;
+	    					}
+	    				}
+	    				else
+	    				{
+	    					rectX=0;
+	    				}
+	    			}
+	    			if(rectY<0)
+	    			{
+	    				if(boundary)
+	    				{
+	    					if(bounceEnabled==true)
+	    					{
+	    						rectY=0;
+	    						inertiaY=-inertiaY;
+	    						inAir=true;
+	    					}
+	    					else
+	    					{
+	    						rectY=0;
+	    						inertiaY=0;
+	    					}
+	    				}
+	    				else
+	    				{
+	    					rectY=screenHeight-rectSize;
+	    				}
+	    			}
+	    			if(rectY+rectSize>screenHeight)
+	    			{
+	    				if(boundary)
+	    				{
+	    					if(bounceEnabled==true)
+	    					{
+	    						rectY=screenHeight-rectSize;
+	    						inertiaY=-inertiaY;
+	    					}
+	    					else
+	    					{
+	    						rectY=screenHeight-rectSize;
+	    						inertiaY=0;
+	    						inAir=false;
+	    					}
+	    				}
+	    				else
+	    				{
+	    					rectY=0;
+	    				}
+	    			}
+
+	    			if(mouseClick==true)
+	    			{
+	    				
+	    					document.addEventListener("mousedown",mouseDown     ,false);
+   					document.addEventListener("mouseup",mouseUp     ,false);
+						if(mouseY>rectY&&mouseX>rectX&&mouseY<rectY+rectSize&&mouseX<rectX+rectSize)
+						{
+							rectY=mouseY;
+							rectX=mouseX;	
+	    				}
+	    			}
+    				drawRect(context,rectX,rectY,rectSize);
+					window.requestAnimationFrame(doStuff);
+				}
+				function drawRect(context,contextX,contextY,contextSize)
+				{
+					context.beginPath();
+					context.moveTo(rectX,rectY);
+					context.lineTo(rectX+rectSize,rectY);
+					context.lineTo(rectX+rectSize,rectY+rectSize);
+					context.lineTo(rectX,rectY+rectSize);
+					context.lineTo(rectX,rectY);
+					context.fillRect(rectX,rectY,rectSize,rectSize);
+					context.stroke();
+				}
+
+				function doKeyDown(event)
+				{
+				    switch (event.keyCode)
+				    {
+
+				        case 87 : moveUp    = true; break;
+				        case 38 : moveUp    = true; break;
+
+				        case 83 : moveDown  = true; break;
+				        case 40 : moveDown  = true; break;
+
+				        case 65 : moveLeft  = true; break;
+				        case 37 : moveLeft  = true; break; 
+
+				        case 68 : moveRight = true; break; 
+				        case 39 : moveRight = true; break; 
+				    }
+				}
+
+				function doKeyUp( vent)
+				{
+				    switch (event.keyCode)
+				    {
+				        case 87 : moveUp    = false; break;
+				        case 38 : moveUp    = false; break;
+
+				        case 83 : moveDown  = false; break;
+				        case 40 : moveDown  = false; break;
+
+				        case 65 : moveLeft  = false; break;
+				        case 37 : moveLeft  = false; break; 
+
+				        case 68 : moveRight = false; break; 
+				        case 39 : moveRight = false; break; 
+				    }
+				}
+
+				function mouseDown(event)
+				{
+					mouseClick=true;
+					mouseX = event.clientX-canvas.getBoundingClientRect().left;
+					mouseY = event.clientY-canvas.getBoundingClientRect().top;
+					/*var mouseX = event.clientX-canvas.getBoundingClientRect().left;
+					var mouseY = event.clientY-canvas.getBoundingClientRect().top;
+
+					if(mouseY>rectY&&mouseX>rectX&&mouseY<rectY+rectSize&&mouseX<rectX+rectSize)
+					{
+						mouseClick=true;
+					}
+					rectY=mouseY;
+					rectX=mouseX;*/
+				}
+				function mouseUp(event)
+				{
+					mouseClick=false;
+				}
+				function toggleGravity()
+				{
+					if(gravityEnabled==true)
+						gravityEnabled=false;
+					else gravityEnabled=true;
+				}
+
+				function toggleBounce()
+				{
+					if(bounceEnabled==true)
+						bounceEnabled=false;
+					else bounceEnabled=true;
+				}
+
+				function toggleBoundary()
+				{
+					if(boundary==true)
+						boundary=false;
+					else boundary=true;
+				}
+
+				/* function getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.clientX - rect.left,
+      y: evt.clientY - rect.top
+    };
+  }
+  canvas.addEventListener('mousemove', function(evt) {
+    var mousePos = getMousePos(canvas, evt);
+    console.log('Mouse position: ' + mousePos.x + ',' + mousePos.y);
+  }, false);*/
+
+		</script>
+
+		<p>
+		TO DO <br>
+		Toggle gravity button  - done<br>
+
+ 		Friction has to be low number, need fix<br>
+
+ 		Bouncy Bouncy - done <br>
+
+ 		Boundaries - done <br>
+
+ 		Fix mouse click <br>
+ 		</p>
+	</body>
+</html>
+
