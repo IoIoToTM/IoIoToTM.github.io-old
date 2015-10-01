@@ -3,9 +3,9 @@
 		<title>Rectangle</title>
 	</head>
 	<body   bgcolor=white>
-	<button id="gravityButton" type="button" onclick="toggleGravity()">Disable/Enable Gravity</button>
-	<button id="bounceButton" type="button" onclick="toggleBounce()">Disable/Enable Bounciness</button>
-	<button id="boundaryButton" type="button" onclick="toggleBoundary()">Disable/Enable Boundaries</button>
+	<input id="gravityButton" type="button" onclick="toggleGravity()" value="Disable Gravity">
+	<input id="bounceButton" type="button" onclick="toggleBounce()" value="Enable Bounce">
+	<input id="boundaryButton" type="button" onclick="toggleBoundary()" value="Disable Boundaries">
 	<input type="button" onclick="location.href='Three.js/3Dcube.html';" value="WebGL" />
 	<h1><i>Rectangle in Rectangle</i></h1>
 
@@ -296,22 +296,43 @@
 				function toggleGravity()
 				{
 					if(gravityEnabled==true)
+					{
 						gravityEnabled=false;
-					else gravityEnabled=true;
+						document.getElementById("gravityButton").value="Enable Gravity";
+					}
+					else 
+						{
+							gravityEnabled=true;
+							document.getElementById("gravityButton").value="Disable Gravity";
+						}
 				}
 
 				function toggleBounce()
 				{
 					if(bounceEnabled==true)
+					{
 						bounceEnabled=false;
-					else bounceEnabled=true;
+						document.getElementById("bounceButton").value="Enable Bounce";
+					}
+					else
+					{ 
+						bounceEnabled=true;
+						document.getElementById("bounceButton").value="Disable Bounce";
+					}
 				}
 
 				function toggleBoundary()
 				{
 					if(boundary==true)
+					{
 						boundary=false;
-					else boundary=true;
+						document.getElementById("boundaryButton").value="Enable Boundaries";
+					}
+					else
+					{
+						boundary=true;
+						document.getElementById("boundaryButton").value="Disable Boundaries";
+					}
 				}
 
 				/* function getMousePos(canvas, evt) {
