@@ -2,21 +2,19 @@
 	<head>
 		<title>Rectangle</title>
 	</head>
-	<body onload="start()" bgcolor=white>
+	<body   bgcolor=white>
 	<button id="gravityButton" type="button" onclick="toggleGravity()">Disable/Enable Gravity</button>
 	<button id="bounceButton" type="button" onclick="toggleBounce()">Disable/Enable Bounciness</button>
 	<button id="boundaryButton" type="button" onclick="toggleBoundary()">Disable/Enable Boundaries</button>
-	<input type="button" onclick="location.href='test/3d.html';" value="WebGL" />
+	<input type="button" onclick="location.href='Three.js/3Dcube.html';" value="WebGL" />
 	<h1><i>Rectangle in Rectangle</i></h1>
 
-		<canvas id="kvadrat" width=700 height=500 style="border:2px solid #000000;"></canvas>
+		<canvas id="Rectangle" width=700 height=500 style="border:2px solid #000000;"></canvas>
 		
 		<script type="text/javascript">
 
-				var canvas = document.getElementById( "kvadrat");
-    			var context = canvas.getContext( "2d" );
-
-    			context.fillStyle="#FF0000";
+				var canvas;
+				var context;
 
 				var rectSize=50;
 				var rectX=50;
@@ -44,15 +42,25 @@
 
 				var inAir = true;
 
-				var screenWidth=canvas.width;
-				var screenHeight=canvas.height;
+				var screenWidth;//=canvas.width;
+				var screenHeight;//=canvas.height;
 
-				function start()
+				var dragok=false;
+
+				function init()
 				{
-					document.addEventListener( "keydown", doKeyDown, false);
-   					document.addEventListener( "keyup",   doKeyUp,   false);
-   					document.addEventListener("mousedown",mouseDown     ,false);
-   					document.addEventListener("mouseup",mouseUp     ,false);
+
+					canvas = document.getElementById( "Rectangle");
+    				context = canvas.getContext( "2d" );
+
+					document.addEventListener( "keydown" ,doKeyDown ,false);
+   					document.addEventListener( "keyup"   ,doKeyUp   ,false);
+   					document.addEventListener("mousedown",myDown ,false);
+   					document.addEventListener("mouseup"  ,myUp   ,false);
+
+   					screenWidth=canvas.width;
+   					screenHeight=canvas.height;
+
 					window.requestAnimationFrame(doStuff);
 				}
 				function doStuff()
@@ -206,28 +214,25 @@
 	    				}
 	    			}
 
-	    			if(mouseClick==true)
+	    			/*if(mouseClick==true)
 	    			{
 	    				
 	    					document.addEventListener("mousedown",mouseDown     ,false);
-   					document.addEventListener("mouseup",mouseUp     ,false);
+   							document.addEventListener("mouseup",mouseUp     ,false);
 						if(mouseY>rectY&&mouseX>rectX&&mouseY<rectY+rectSize&&mouseX<rectX+rectSize)
 						{
 							rectY=mouseY;
 							rectX=mouseX;	
 	    				}
-	    			}
-    				drawRect(context,rectX,rectY,rectSize);
+	    			}*/
+    				drawRect();
 					window.requestAnimationFrame(doStuff);
 				}
-				function drawRect(context,contextX,contextY,contextSize)
+				function drawRect()
 				{
+					context.fillStyle="#FF0000";
 					context.beginPath();
-					context.moveTo(rectX,rectY);
-					context.lineTo(rectX+rectSize,rectY);
-					context.lineTo(rectX+rectSize,rectY+rectSize);
-					context.lineTo(rectX,rectY+rectSize);
-					context.lineTo(rectX,rectY);
+					context.rect(rectX,rectY,rectSize,rectSize);
 					context.fillRect(rectX,rectY,rectSize,rectSize);
 					context.stroke();
 				}
@@ -269,11 +274,11 @@
 				    }
 				}
 
-				function mouseDown(event)
+				/*function mouseDown(event)
 				{
 					mouseClick=true;
-					mouseX = event.clientX-canvas.getBoundingClientRect().left;
-					mouseY = event.clientY-canvas.getBoundingClientRect().top;
+					//mouseX = event.clientX-canvas.getBoundingClientRect().left;
+					//mouseY = event.clientY-canvas.getBoundingClientRect().top;
 					/*var mouseX = event.clientX-canvas.getBoundingClientRect().left;
 					var mouseY = event.clientY-canvas.getBoundingClientRect().top;
 
@@ -282,12 +287,12 @@
 						mouseClick=true;
 					}
 					rectY=mouseY;
-					rectX=mouseX;*/
+					rectX=mouseX;
 				}
 				function mouseUp(event)
 				{
 					mouseClick=false;
-				}
+				}*/
 				function toggleGravity()
 				{
 					if(gravityEnabled==true)
@@ -320,7 +325,38 @@
     var mousePos = getMousePos(canvas, evt);
     console.log('Mouse position: ' + mousePos.x + ',' + mousePos.y);
   }, false);*/
+				function myMove(event)
+				{
+ 					if (dragok)
+ 						{
+  							rectX = event.clientX-canvas.getBoundingClientRect().left;
+  							rectY = event.clientY-canvas.getBoundingClientRect().top;
+						}
+				}
 
+				function myDown(event)
+				{
+					mouseX = event.clientX-canvas.getBoundingClientRect().left;
+					mouseY = event.clientY-canvas.getBoundingClientRect().top;
+ 					if (mouseY>rectY&&mouseX>rectX&&mouseY<rectY+rectSize&&mouseX<rectX+rectSize) /* + canvas.getBoundingClientRect().left && event.clientX > rectX  + canvas.offsetLeft && event.pageY < rectY  + canvas.offsetTop && event.pageY > rectY  + canvas.offsetTop)*/
+ 					{
+ 						//alert("er");
+ 						rectX = event.pageX - canvas.offsetLeft;
+  						rectY = event.pageY - canvas.offsetTop;
+  						dragok = true;
+  						//document.addEventListener("onmousemove"  ,myMove   ,false);
+ 						canvas.onmousemove = myMove;
+ 						//alert("re");
+ 					}
+				}
+				function myUp()
+				{
+ 					dragok = false;
+					canvas.onmousemove = null;
+				}
+		init();
+		//canvas.onmousedown = myDown;
+		//canvas.onmouseup = myUp;
 		</script>
 
 		<p>
