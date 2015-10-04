@@ -397,8 +397,8 @@
 				{
  					if (dragok)
  						{
-  							rectX = event.clientX-canvas.getBoundingClientRect().left;
-  							rectY = event.clientY-canvas.getBoundingClientRect().top;
+  							Ship.getX() = event.clientX-canvas.getBoundingClientRect().left;
+  							Ship.getY() = event.clientY-canvas.getBoundingClientRect().top;
 						}
 				}
 
@@ -409,8 +409,8 @@
  					if (mouseY>Ship.getY()&&mouseX>Ship.getX()&&mouseY<Ship.getY()+Ship.getRectSize()&&mouseX<Ship.getX()+Ship.getRectSize()) /* + canvas.getBoundingClientRect().left && event.clientX > rectX  + canvas.offsetLeft && event.pageY < rectY  + canvas.offsetTop && event.pageY > rectY  + canvas.offsetTop)*/
  					{
  						//alert("er");
- 						rectX = event.pageX - canvas.offsetLeft;
-  						rectY = event.pageY - canvas.offsetTop;
+ 						Ship.getX() = event.pageX - canvas.offsetLeft;
+  						Ship.getY() = event.pageY - canvas.offsetTop;
   						dragok = true;
   						//document.addEventListener("onmousemove"  ,myMove   ,false);
  						canvas.onmousemove = myMove;
