@@ -16,16 +16,72 @@
 				var canvas;
 				var context;
 
-				var rectSize=50;
-				var rectX=50;
-				var rectY=20;
-				var acceleration=0.3;
+				var Object = function()
+				{
+					var rectSize=50;
+					var rectX=50;
+					var rectY=20;
+					var acceleration=0.3;
+
+					var inertiaX=0;
+					var inertiaY=0;
+
+					var Rect = 
+					{
+						getX:function()
+							{
+								return(rectX);
+							},
+						getY:function()
+							{
+								return(rectY);
+							},
+						getRectSize:function()
+							{
+								return(rectSize);
+							},
+						getAcceleration:function()
+							{
+								return(acceleration);
+							},
+						getInertiaX:function()
+							{
+								return(inertiaX);
+							},
+						getInertiaY:function()
+							{
+								return(inertiaY);
+							},
+						setX:function(x)
+							{
+								rectX=x;
+							},
+						setY:function(y)
+							{
+								rectY=y;
+							},
+						setRectSize:function(size)
+							{
+								rectSize=size;
+							},
+						setAcceleration:function(Acc)
+							{
+								acceleration=acc;
+							},
+						setInertiaX:function(inX)
+							{
+								inertiaX=inX;
+							},
+						setInertiaY:function(inY)
+							{
+								inertiaY=inY;
+							},
+					}
+					return (Rect)
+				}
 
 				var gravity=0.4;
 				var friction=0.05;
-
-				var inertiaX=0;
-				var inertiaY=0;
 
 				var moveUp=false;
 				var moveDown=false;
@@ -69,148 +125,139 @@
 
     				if(moveUp)
 	    				{
-	    					inertiaY-=2*acceleration;
+	    					Ship.setInertiaY(Ship.getInertiaY()-2*Ship.getAcceleration());
 	    				}
 	    			if(moveDown)
 	    				{
-	    					inertiaY+=2*acceleration;
-	    				}
-	    			if(moveLeft)
-	    				{
-	    					if(gravityEnabled==false)
-	    					{
-	    						inertiaX-=2*acceleration;
-	    					}
-	    					else if(inAir)
-	    					{
-	    						inertiaX-=1.5*acceleration;
-	    					}
+	    					Ship.setInertiaY(Ship.getInertiaY()+2*Ship.getAcceleration());
 	    				}
 	    			if(moveRight)
 	    				{
 	    					if(gravityEnabled==false)
 	    					{
-	    						inertiaX+=2*acceleration;
+	    						Ship.setInertiaX(Ship.getInertiaX()+2*Ship.getAcceleration());
 	    					}
 	    					else 
 	    						{
 	    							if(inAir)
 	    							{
-	    								inertiaX+=2*acceleration;
+	    								Ship.setInertiaX(Ship.getInertiaX()+2*Ship.getAcceleration());
 	    							}
-	    							else inertiaX+=1.5*acceleration;
+	    							else Ship.setInertiaX(Ship.getInertiaX()+1.5*Ship.getAcceleration());
 	    						}	
 	    				}
 					if(moveLeft)
 	    			{
 	    				if(gravityEnabled==false)
 	    				{
-	    					inertiaX-=2*acceleration;
+	    					Ship.setInertiaX(Ship.getInertiaX()-2*Ship.getAcceleration());
 	    				}
 	    				else 
 	    					{
 	    						if(inAir)
 	    						{
-	    							inertiaX-=2*acceleration;
+	    							Ship.setInertiaX(Ship.getInertiaX()-2*Ship.getAcceleration());
 	    						}
-	    						else inertiaX-=1.5*acceleration;
+	    						else Ship.setInertiaX(Ship.getInertiaX()-1.5*Ship.getAcceleration()); 
 	    					}	
 	    			}
 	    			if(gravityEnabled)
 	    			{
-	    				inertiaY+=gravity;
-	    				if(inAir==false&&inertiaX<0)
+	    				Ship.setInertiaY(Ship.getInertiaY()+gravity);
+	    				if(inAir==false&&Ship.getInertiaX()<0)
 	    				{
-	    					inertiaX+=friction;
+	    					Ship.setInertiaX(Ship.getInertiaX()+friction);
 	    				}
-	    				if(inAir==false&&inertiaX>0)
+	    				if(inAir==false&&Ship.getInertiaY()>0)
 	    				{
-	    					inertiaX-=friction;
+	    					Ship.setInertiaX(Ship.getInertiaX()-friction);
 	    				}
 	    			}
 
-	    			rectY+=inertiaY;
+	    			Ship.setX(Ship.getX()+Ship.getInertiaX());
 
-	    			rectX+=inertiaX;
+	    			Ship.setY(Ship.getY()+Ship.getInertiaY());
 
-	    			if(rectX<0)
+	    			if(Ship.getX()<0)
 	    			{
 	    				if(boundary)
 	    				{
 	    					if(bounceEnabled==true)
 	    					{
-	    						inertiaX=-inertiaX;
+	    						Ship.setInertiaX(-Ship.getInertiaX())
 	    					}
 	    					else
 	    					{
-	    						rectX=0;
-	    						inertiaX=0;
+	    						Ship.setX(0);
+	    						Ship.setInertiaX(0);
 	    					}
 	    				}
 	    				else
 	    				{
-	    					rectX=screenWidth-rectSize;
+	    					Ship.setX(screenWidth-Ship.getRectSize());
 	    				}
 	    			}
-	    			if(rectX+rectSize>screenWidth)
+	    			if(Ship.getX()+Ship.getRectSize()>screenWidth)
 	    			{
 	    				if(boundary)
 	    				{
 	    					if(bounceEnabled==true)
 	    					{
-	    						inertiaX=-inertiaX;
+	    						Ship.setInertiaX(-Ship.getInertiaX());
 	    					}
 	    					else
 	    					{
-	    						rectX=screenWidth-rectSize;
-	    						inertiaX=0;
+	    						Ship.setX(screenWidth-Ship.getRectSize());
+	    						Ship.setInertiaX(0);
 	    					}
 	    				}
 	    				else
 	    				{
-	    					rectX=0;
+	    					Ship.setX(0);
 	    				}
 	    			}
-	    			if(rectY<0)
+	    			if(Ship.getY()<0)
 	    			{
 	    				if(boundary)
 	    				{
 	    					if(bounceEnabled==true)
 	    					{
-	    						rectY=0;
-	    						inertiaY=-inertiaY;
+	    						Ship.setY(0);
+								Ship.setInertiaY(-Ship.getInertiaY());
+
 	    						inAir=true;
 	    					}
 	    					else
 	    					{
-	    						rectY=0;
-	    						inertiaY=0;
+	    						Ship.setY(0);
+	    						Ship.setInertiaY(0);
 	    					}
 	    				}
 	    				else
 	    				{
-	    					rectY=screenHeight-rectSize;
+	    					Ship.setY(screenHeight-Ship.getRectSize());
 	    				}
 	    			}
-	    			if(rectY+rectSize>screenHeight)
+	    			if(Ship.getY()+Ship.getRectSize()>screenHeight)
 	    			{
 	    				if(boundary)
 	    				{
 	    					if(bounceEnabled==true)
 	    					{
-	    						rectY=screenHeight-rectSize;
-	    						inertiaY=-inertiaY;
+	    						Ship.setY(screenHeight-Ship.getRectSize());
+	    						Ship.setInertiaY(-Ship.getInertiaY());
 	    					}
 	    					else
 	    					{
-	    						rectY=screenHeight-rectSize;
-	    						inertiaY=0;
+	    						Ship.setY(screenHeight-Ship.getRectSize());
+	    						Ship.setInertiaY(0);
+
 	    						inAir=false;
 	    					}
 	    				}
 	    				else
 	    				{
-	    					rectY=0;
+	    					Ship.setY(0);
 	    				}
 	    			}
 
@@ -232,8 +279,8 @@
 				{
 					context.fillStyle="#FF0000";
 					context.beginPath();
-					context.rect(rectX,rectY,rectSize,rectSize);
-					context.fillRect(rectX,rectY,rectSize,rectSize);
+					context.rect(Ship.getX(),Ship.getY(),Ship.getRectSize(),Ship.getRectSize());
+					context.fillRect(Ship.getX(),Ship.getY(),Ship.getRectSize(),Ship.getRectSize());
 					context.stroke();
 				}
 
@@ -359,7 +406,7 @@
 				{
 					mouseX = event.clientX-canvas.getBoundingClientRect().left;
 					mouseY = event.clientY-canvas.getBoundingClientRect().top;
- 					if (mouseY>rectY&&mouseX>rectX&&mouseY<rectY+rectSize&&mouseX<rectX+rectSize) /* + canvas.getBoundingClientRect().left && event.clientX > rectX  + canvas.offsetLeft && event.pageY < rectY  + canvas.offsetTop && event.pageY > rectY  + canvas.offsetTop)*/
+ 					if (mouseY>Ship.getY()&&mouseX>Ship.getX()&&mouseY<Ship.getY()+Ship.getRectSize()&&mouseX<Ship.getX()+Ship.getRectSize()) /* + canvas.getBoundingClientRect().left && event.clientX > rectX  + canvas.offsetLeft && event.pageY < rectY  + canvas.offsetTop && event.pageY > rectY  + canvas.offsetTop)*/
  					{
  						//alert("er");
  						rectX = event.pageX - canvas.offsetLeft;
@@ -375,6 +422,8 @@
  					dragok = false;
 					canvas.onmousemove = null;
 				}
+
+				var Ship = new Object();
 		init();
 		//canvas.onmousedown = myDown;
 		//canvas.onmouseup = myUp;
