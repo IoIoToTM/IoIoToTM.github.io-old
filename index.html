@@ -21,7 +21,7 @@
 					var rectSize=50;
 					var rectX=50;
 					var rectY=20;
-					var acceleration=0.3;
+					var acceleration=0.5;
 
 					var inertiaX=0;
 					var inertiaY=0;
@@ -81,7 +81,7 @@
 				}
 
 				var gravity=0.4;
-				var friction=0.05;
+				var friction=0.1;
 
 				var moveUp=false;
 				var moveDown=false;
@@ -123,6 +123,32 @@
 				{
     				context.clearRect( 0, 0, screenWidth, screenHeight );
 
+    				if(gravityEnabled)
+	    			{
+	    				Ship.setInertiaY(Ship.getInertiaY()+gravity);
+
+	    				if(inAir==false&&Ship.getInertiaX()<0)
+	    				{
+	    					if(Ship.getInertiaX()>=-0.05)
+	    					{
+	    						Ship.setInertiaX(0);
+	    					}
+	    					else Ship.setInertiaX(Ship.getInertiaX()+friction);
+	    				}
+	    				if(inAir==false&&Ship.getInertiaX()>0)
+	    				{
+	    					if(Ship.getInertiaX()<=0.05)
+	    					{
+	    						Ship.setInertiaX(0);
+	    					}
+	    					else Ship.setInertiaX(Ship.getInertiaX()-friction);
+	    				}
+	    				/*if(Ship.getInertiaX()<=0.05||Ship.getInertiaX()>=-0.05)
+	    				{
+	    					Ship.setInertiaX(0);
+	    				}*/
+	    			}
+
     				if(moveUp)
 	    				{
 	    					Ship.setInertiaY(Ship.getInertiaY()-2*Ship.getAcceleration());
@@ -131,6 +157,8 @@
 	    				{
 	    					Ship.setInertiaY(Ship.getInertiaY()+2*Ship.getAcceleration());
 	    				}
+
+
 	    			if(moveRight)
 	    				{
 	    					if(gravityEnabled==false)
@@ -161,18 +189,8 @@
 	    						else Ship.setInertiaX(Ship.getInertiaX()-1.5*Ship.getAcceleration()); 
 	    					}	
 	    			}
-	    			if(gravityEnabled)
-	    			{
-	    				Ship.setInertiaY(Ship.getInertiaY()+gravity);
-	    				if(inAir==false&&Ship.getInertiaX()<0)
-	    				{
-	    					Ship.setInertiaX(Ship.getInertiaX()+friction);
-	    				}
-	    				if(inAir==false&&Ship.getInertiaY()>0)
-	    				{
-	    					Ship.setInertiaX(Ship.getInertiaX()-friction);
-	    				}
-	    			}
+
+
 
 	    			Ship.setX(Ship.getX()+Ship.getInertiaX());
 
@@ -224,8 +242,6 @@
 	    					{
 	    						Ship.setY(0);
 								Ship.setInertiaY(-Ship.getInertiaY());
-
-	    						inAir=true;
 	    					}
 	    					else
 	    					{
@@ -250,9 +266,7 @@
 	    					else
 	    					{
 	    						Ship.setY(screenHeight-Ship.getRectSize());
-	    						Ship.setInertiaY(0);
-
-	    						inAir=false;
+	    						Ship.setInertiaY(0);	    						
 	    					}
 	    				}
 	    				else
@@ -261,6 +275,14 @@
 	    				}
 	    			}
 
+	    			if(Ship.getY()>=0&&Ship.getY()+Ship.getRectSize()<screenHeight)
+	    			{
+	    				inAir=true;
+	    			}
+	    			else inAir=false;
+	    			//console.log("Is in air : "+inAir);
+
+	    			//console.log(Ship.getInertiaX()+" "+Ship.getInertiaY());
 	    			/*if(mouseClick==true)
 	    			{
 	    				
@@ -272,6 +294,15 @@
 							rectX=mouseX;	
 	    				}
 	    			}*/
+	    			if(dragok==true&&gravity==true)
+	    			{
+	    				gravity=false;
+	    			}
+
+	    			if(dragok==false&&gravity==false)
+	    			{
+	    				gravity=true;
+	    			}
     				drawRect();
 					window.requestAnimationFrame(doStuff);
 				}
@@ -303,7 +334,7 @@
 				    }
 				}
 
-				function doKeyUp( vent)
+				function doKeyUp( event)
 				{
 				    switch (event.keyCode)
 				    {
@@ -397,8 +428,8 @@
 				{
  					if (dragok)
  						{
-  							Ship.getX() = event.clientX-canvas.getBoundingClientRect().left;
-  							Ship.getY() = event.clientY-canvas.getBoundingClientRect().top;
+  							Ship.setX(event.clientX-canvas.getBoundingClientRect().left);
+  							Ship.setY(event.clientY-canvas.getBoundingClientRect().top);
 						}
 				}
 
@@ -409,13 +440,15 @@
  					if (mouseY>Ship.getY()&&mouseX>Ship.getX()&&mouseY<Ship.getY()+Ship.getRectSize()&&mouseX<Ship.getX()+Ship.getRectSize()) /* + canvas.getBoundingClientRect().left && event.clientX > rectX  + canvas.offsetLeft && event.pageY < rectY  + canvas.offsetTop && event.pageY > rectY  + canvas.offsetTop)*/
  					{
  						//alert("er");
- 						Ship.getX() = event.pageX - canvas.offsetLeft;
-  						Ship.getY() = event.pageY - canvas.offsetTop;
+ 						console.log("r");
+ 						Ship.setX(event.pageX - canvas.offsetLeft);
+  						Ship.getY(event.pageY - canvas.offsetTop);
   						dragok = true;
   						//document.addEventListener("onmousemove"  ,myMove   ,false);
  						canvas.onmousemove = myMove;
  						//alert("re");
  					}
+ 					else dragok=false;
 				}
 				function myUp()
 				{
