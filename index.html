@@ -7,14 +7,21 @@
 	<input id="bounceButton" type="button" onclick="toggleBounce()" value="Enable Bounce">
 	<input id="boundaryButton" type="button" onclick="toggleBoundary()" value="Disable Boundaries">
 	<input type="button" onclick="location.href='Three.js/3Dcube.html';" value="WebGL" />
+	<br>
+	<br>
+	<input id="" type="button" onclick="setGravity()" value="Set Gravity">
+	<input type="text" id="gravityInput">
 	<h1><i>Rectangle in Rectangle</i></h1>
 
 		<canvas id="Rectangle" width=700 height=500 style="border:2px solid #000000;"></canvas>
 		
 		<script type="text/javascript">
 
+
+
 				var canvas;
 				var context;
+
 
 				var Object = function()
 				{
@@ -82,6 +89,7 @@
 
 				var gravity=0.4;
 				var friction=0.1;
+				var bounceCoef=0.5;
 
 				var moveUp=false;
 				var moveDown=false;
@@ -103,6 +111,14 @@
 
 				var dragok=false;
 
+				/*var gravityInput=document.getElementById("gravityInput");
+				gravityInput.defaultValue = 0.4;
+
+				gravity=gravityInput.defaultValue;*/
+
+				
+
+
 				function init()
 				{
 
@@ -121,6 +137,9 @@
 				}
 				function doStuff()
 				{
+
+					
+
     				context.clearRect( 0, 0, screenWidth, screenHeight );
 
     				if(gravityEnabled)
@@ -202,7 +221,11 @@
 	    				{
 	    					if(bounceEnabled==true)
 	    					{
-	    						Ship.setInertiaX(-Ship.getInertiaX())
+	    						if(Ship.getInertiaX()<0)
+	    						{
+	    							Ship.setX(0);
+	    						}
+	    						Ship.setInertiaX((-Ship.getInertiaX())*bounceCoef);
 	    					}
 	    					else
 	    					{
@@ -221,7 +244,11 @@
 	    				{
 	    					if(bounceEnabled==true)
 	    					{
-	    						Ship.setInertiaX(-Ship.getInertiaX());
+	    						if(Ship.getInertiaX()>0)
+	    						{
+	    							Ship.setX(screenWidth-Ship.getRectSize());
+	    						}
+	    						Ship.setInertiaX((-Ship.getInertiaX())*bounceCoef);
 	    					}
 	    					else
 	    					{
@@ -241,7 +268,7 @@
 	    					if(bounceEnabled==true)
 	    					{
 	    						Ship.setY(0);
-								Ship.setInertiaY(-Ship.getInertiaY());
+								Ship.setInertiaY((-Ship.getInertiaY())*bounceCoef);
 	    					}
 	    					else
 	    					{
@@ -261,7 +288,7 @@
 	    					if(bounceEnabled==true)
 	    					{
 	    						Ship.setY(screenHeight-Ship.getRectSize());
-	    						Ship.setInertiaY(-Ship.getInertiaY());
+	    						Ship.setInertiaY((-Ship.getInertiaY())*bounceCoef);
 	    					}
 	    					else
 	    					{
@@ -304,6 +331,9 @@
 	    				gravity=true;
 	    			}
     				drawRect();
+
+					console.log(Ship.getX());
+					
 					window.requestAnimationFrame(doStuff);
 				}
 				function drawRect()
@@ -454,6 +484,12 @@
 				{
  					dragok = false;
 					canvas.onmousemove = null;
+				}
+
+				function setGravity()
+				{
+					gravity=gravityInput.value;
+					console.log(gravity+ " "+ Ship.getX());
 				}
 
 				var Ship = new Object();
