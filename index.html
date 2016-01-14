@@ -10,8 +10,8 @@
 	<br>
 	<br>
 	<input id="" type="button" onclick="setGravity()" value="Set Gravity">
-	<input type="text" id="gravityInput">
-	<h1><i>Rectangle in Rectangle</i></h1>
+	<input id="gravityInput" type="number">
+	<h1>Rectangle in Rectangle</h1>
 
 		<canvas id="Rectangle" width=700 height=500 style="border:2px solid #000000;"></canvas>
 		
@@ -321,14 +321,14 @@
 							rectX=mouseX;	
 	    				}
 	    			}*/
-	    			if(dragok==true&&gravity==true)
+	    			if(dragok==true&&gravityEnabled==true)
 	    			{
-	    				gravity=false;
+	    				gravityEnabled=false;
 	    			}
 
-	    			if(dragok==false&&gravity==false)
+	    			if(dragok==false&&gravityEnabled==false)
 	    			{
-	    				gravity=true;
+	    				gravityEnabled=true;
 	    			}
     				drawRect();
 
@@ -488,8 +488,8 @@
 
 				function setGravity()
 				{
-					gravity=gravityInput.value;
-					console.log(gravity+ " "+ Ship.getX());
+					var gravityInput=document.getElementById("gravityInput").value;
+					gravity = Number(gravityInput);
 				}
 
 				var Ship = new Object();
@@ -497,19 +497,6 @@
 		//canvas.onmousedown = myDown;
 		//canvas.onmouseup = myUp;
 		</script>
-
-		<p>
-		TO DO <br>
-		Toggle gravity button  - done<br>
-
- 		Friction has to be low number, need fix<br>
-
- 		Bouncy Bouncy - done <br>
-
- 		Boundaries - done <br>
-
- 		Fix mouse click <br>
- 		</p>
 	</body>
 </html>
 
