@@ -323,13 +323,15 @@
 	    			}*/
 	    			if(dragok==true&&gravityEnabled==true)
 	    			{
-	    				gravityEnabled=false;
+	    				Ship.setInertiaX(0);
+	    				Ship.setInertiaY(0);
+	    				//gravityEnabled=false;
 	    			}
 
-	    			if(dragok==false&&gravityEnabled==false)
+	    			/*if(dragok==false&&gravityEnabled==false)
 	    			{
 	    				gravityEnabled=true;
-	    			}
+	    			}*/
     				drawRect();
 
 					console.log(Ship.getX());
@@ -409,10 +411,10 @@
 						document.getElementById("gravityButton").value="Enable Gravity";
 					}
 					else 
-						{
-							gravityEnabled=true;
-							document.getElementById("gravityButton").value="Disable Gravity";
-						}
+					{
+						gravityEnabled=true;
+						document.getElementById("gravityButton").value="Disable Gravity";
+					}
 				}
 
 				function toggleBounce()
