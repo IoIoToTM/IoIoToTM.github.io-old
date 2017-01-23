@@ -6,22 +6,20 @@
 	<input id="gravityButton" type="button" onclick="toggleGravity()" value="Disable Gravity">
 	<input id="bounceButton" type="button" onclick="toggleBounce()" value="Enable Bounce">
 	<input id="boundaryButton" type="button" onclick="toggleBoundary()" value="Disable Boundaries">
-	<input type="button" onclick="location.href='Three.js/3Dcube.html';" value="WebGL" />
+	<input id="edgeRectButton" type="button" onclick="toggleDrawRects()" value="Disable Edge Squares">
+	<input type="button" onclick="location.href='Three.js/3Dcube.html';" style="background:transparent; border:none; color:transparent;" value="WebGL" />
 	<br>
 	<br>
 	<input id="" type="button" onclick="setGravity()" value="Set Gravity">
-	<input id="gravityInput" type="number">
-	<h1>Rectangle in Rectangle</h1>
+	<input id="gravityInput" type="number" value="0.4">
+	<h1></h1>
 
-		<canvas id="Rectangle" width=700 height=500 style="border:2px solid #000000;"></canvas>
+		<canvas id="Rectangle" width=900 height=700 style="border:2px solid #000000;"></canvas>
 		
 		<script type="text/javascript">
 
-
-
 				var canvas;
 				var context;
-
 
 				var Object = function()
 				{
@@ -89,7 +87,7 @@
 
 				var gravity=0.4;
 				var friction=0.1;
-				var bounceCoef=0.5;
+				var bounceCoef=1.1;
 
 				var moveUp=false;
 				var moveDown=false;
@@ -110,6 +108,15 @@
 				var screenHeight;//=canvas.height;
 
 				var dragok=false;
+
+				var timer = 30;
+
+				var redirect = false;
+				var redirectAddress="";
+
+				var drawRects = true;
+
+				var gravityInput = 0.4;
 
 				/*var gravityInput=document.getElementById("gravityInput");
 				gravityInput.defaultValue = 0.4;
@@ -334,7 +341,37 @@
 	    			}*/
     				drawRect();
 
-					console.log(Ship.getX());
+    				if(drawRects==true)
+    				{
+    					drawEdgeRects();
+    				
+    					if(Ship.getX()==screenWidth-Ship.getRectSize()&&Ship.getY()==screenHeight-Ship.getRectSize())
+    					{
+    						//console.log(Ship.getX());
+    						drawNum("Going to my GitHub page in ");
+    						redirectAddress = "https://github.com/IoIoToTM";
+    					}
+    					else if(Ship.getX()==0&&Ship.getY()==screenHeight-Ship.getRectSize())
+    					{
+    						//console.log(Ship.getX());
+    						drawNum("Going to WebGL page in ");
+    						redirectAddress = "https://IoIoToTM.github.io/Three.js/3Dcube.html";
+    					}
+    					else timer = 30;
+    				}
+    				else timer = 30;
+
+    				
+					if(timer<=0)
+					{
+						//console.log("rer");
+						timer = 0;
+						if(redirect == false)
+						{
+							redirect = true;
+							window.location.assign(redirectAddress);
+						}
+					}
 					
 					window.requestAnimationFrame(doStuff);
 				}
@@ -345,6 +382,37 @@
 					context.rect(Ship.getX(),Ship.getY(),Ship.getRectSize(),Ship.getRectSize());
 					context.fillRect(Ship.getX(),Ship.getY(),Ship.getRectSize(),Ship.getRectSize());
 					context.stroke();
+				}
+				
+				function drawEdgeRects()
+				{
+					context.fillStyle="#000000";
+					context.beginPath();
+					context.textAlign = 'start';
+					context.font="21px Arial";
+
+					context.rect(0,screenHeight-Ship.getRectSize(),Ship.getRectSize(),Ship.getRectSize());
+
+					context.textAlign = 'start';
+					context.fillText("WebGL",0,screenHeight-Ship.getRectSize()-10);
+
+					context.textAlign = 'end';
+					context.rect(screenWidth-Ship.getRectSize(),screenHeight-Ship.getRectSize(),Ship.getRectSize(),Ship.getRectSize());
+					context.fillText("GitHub",screenWidth,screenHeight-Ship.getRectSize()-10);
+
+					context.stroke();
+				}
+
+				function drawNum(text)
+				{
+					context.fillStyle="#00000";
+					context.beginPath();
+					context.font="30px Arial";
+					context.textAlign = 'center';
+					context.fillText(text+ Math.round(timer/10),screenWidth/2,screenHeight/2);
+					context.stroke();
+					timer-=0.2;
+					
 				}
 
 				function doKeyDown(event)
@@ -444,6 +512,19 @@
 						document.getElementById("boundaryButton").value="Disable Boundaries";
 					}
 				}
+				function toggleDrawRects()
+				{
+					if(drawRects==true)
+					{
+						drawRects=false;
+						document.getElementById("edgeRectButton").value="Enable Edge Squares";
+					}
+					else
+					{
+						drawRects=true;
+						document.getElementById("edgeRectButton").value="Disable Edge Squares";
+					}
+				}
 
 				/* function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
@@ -472,7 +553,7 @@
  					if (mouseY>Ship.getY()&&mouseX>Ship.getX()&&mouseY<Ship.getY()+Ship.getRectSize()&&mouseX<Ship.getX()+Ship.getRectSize()) /* + canvas.getBoundingClientRect().left && event.clientX > rectX  + canvas.offsetLeft && event.pageY < rectY  + canvas.offsetTop && event.pageY > rectY  + canvas.offsetTop)*/
  					{
  						//alert("er");
- 						console.log("r");
+ 						gravity = 0;
  						Ship.setX(event.pageX - canvas.offsetLeft);
   						Ship.getY(event.pageY - canvas.offsetTop);
   						dragok = true;
@@ -484,13 +565,14 @@
 				}
 				function myUp()
 				{
+					gravity= Number(gravityInput);
  					dragok = false;
 					canvas.onmousemove = null;
 				}
 
 				function setGravity()
 				{
-					var gravityInput=document.getElementById("gravityInput").value;
+					gravityInput = document.getElementById("gravityInput").value;
 					gravity = Number(gravityInput);
 				}
 
