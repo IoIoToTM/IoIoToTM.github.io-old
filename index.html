@@ -12,6 +12,10 @@
 	<br>
 	<input id="" type="button" onclick="setGravity()" value="Set Gravity">
 	<input id="gravityInput" type="number" value="0.4">
+
+	<input id="" type="button" onclick="setBounceCoef()" value="Set Bouncing Coeficcient">
+	<input id="bounceInput" type="number" value="0.5">
+
 	<h1></h1>
 
 		<canvas id="Rectangle" width=900 height=700 style="border:2px solid #000000;"></canvas>
@@ -87,7 +91,7 @@
 
 				var gravity=0.4;
 				var friction=0.1;
-				var bounceCoef=1.1;
+				var bounceCoef=0.5;
 
 				var moveUp=false;
 				var moveDown=false;
@@ -117,6 +121,7 @@
 				var drawRects = true;
 
 				var gravityInput = 0.4;
+				var bounceCoefInput = 0.5;
 
 				/*var gravityInput=document.getElementById("gravityInput");
 				gravityInput.defaultValue = 0.4;
@@ -575,6 +580,12 @@
 					gravityInput = document.getElementById("gravityInput").value;
 					gravity = Number(gravityInput);
 				}
+				function setBounceCoef()
+				{
+					bounceCoefInput = document.getElementById("bounceInput").value;
+					bounceCoef = Number(bounceCoefInput);
+				}
+
 
 				var Ship = new Object();
 		init();
