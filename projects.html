@@ -15,36 +15,36 @@
 	<title>Yoan-Daniel Malinov</title>
 
 	<link rel="stylesheet" href="stylesheets/style.css" media="screen">
-	
 	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta charset=utf-8>
 </head>
 <body>
 	<header>
 		<section class = "page-header">
 			<h1 class = "username">
-				IoIoTo
+				<img src="files/Logo.png" class="logo">
 			</h1>
 			<div align="center"> 
-			<a href="index.html" class="btn"> Home </a>
-			<a href="projects.html" class="btn"> Projects </a>
+			<a href="index.html" id="Home" class="btn"></a>
+			<a href="projects.html" id="Projects" class="btn"></a>
 			</div>
 		</section>
 	</header>
 
 	<section class="main">
 	
-	<h2>Projects</h2>	
+	<h2 id="projectHeading"></h2>	
 	<p id="DigitalDoily">
-	 <a href="https://github.com/IoIoToTM/Digital-Doily"> Digital Doily </a> - This is actually my first Programming II coursework at the university. It's basically a <a href="https://en.wikipedia.org/wiki/Doily">Doily</a> maker, with a few options to change color, size of pen, numbers of refelcted sectors and etc. It's written in Java as we're studying that. (Download JAR file: <a href="files/Digital Doily.jar">Digital Doily.jar</a>)
+	 <div id="DoilyDesc"> </div>
 	 <img src="media/digitaldoily.png">
 	</p>
-	<p id="PhysicsSquare">
-		<a href="https://github.com/IoIoToTM/IoIoToTM.github.io/blob/master/PhysicsSquare.html">Physics square</a> is my first try at making something in JavaScript and HTML5. It's kind of a physics simulation (a very simple one), where you control the red square with the arrow/WASD keys or you can drag it with the mouse, and you can change a few options like gravity, the bouncing coefficient (how much it bounces) and a few other option. There is also a WebGL link if you move the square to the left bottom corner, which is a little test with 3D animation I wanted to try. You can try it on this page (click <a href="javascript:void(0)" id='button'>here</a>) or in it's original page <a href="PhysicsSquare.html">here</a>.
-	</p>
+	<p id="PhysicsSquare"></p>
 	
 	
 	</section>
 
 </body>
+<script type="text/javascript" src="lang.js"></script>
 <script type="text/javascript" src="scripts/javascript.js"></script>
+
 </html>

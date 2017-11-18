@@ -1,0 +1,14 @@
+test = ' [ {
+	"en":{
+		"Home":"Home",
+		"Projects":"Projects",
+		"About me":"I am a second year Computer Science student at the University of Southampton. I have been programming since 8th grade (2011), mostly in C++, and now I'm studying Java. I have some experience in web development - HTML5, CSS, Javascript, PHP and etc. You can view some of my projects in the projects page where you can also see the code in GitHub."
+	},
+	"bg":{
+		"Home":"Начало",
+		"Projects":"Проекти",
+		"About me":"Аз съм студент по Компютърни науки втора година в университета в Саутхемптън. Програмирам от осми клас (2011), предимно в C++, а сега уча Java. Имам и опит в уеб разработка - HTML5, CSS, Javascript, PHP and etc. Може да видиш някои от проектите ми в страницата за проекти, където също така може да видиш кода ми в GitHub."
+	}
+
+
+}]';
