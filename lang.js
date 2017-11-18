@@ -5,17 +5,19 @@ languages = ' [ {"index":{"en":{"Home":"Home","Projects":"Projects","About me":"
 	var language = getQueryVariable("lang");
 
 	var obj = JSON.parse(languages)[0];
-	var url = location.href.substring(0,location.href.indexOf("?"));
+	
 	
 
 	if(language==null)
 	{
+		var url = location.href.substring(0,location.href.indexOf("?"));
 		url+="?lang=en";
 		language = "en";
+		window.history.pushState("","",url);
 		
 	}
 
-	window.history.pushState("","",url);
+	
 	displayLanguage(language);
 
 //function for getting the variables form the URL
@@ -38,11 +40,14 @@ function displayLanguage(lang)
 	var url_tokens = url.split("/");
 	var url_name = url_tokens[url_tokens.length-1].split(".")[0];
 
+	var noIndexHTML = url.indexOf("index")<0;
+	var noProjectsHTML = url.indexOf("projects")<0;
+
 
 	fixButtonLanguage(lang);
 	fixLanguageSelector(lang);
 
-	if(url_name=="index"|| url_name=="")
+	if(url_name=="index" || (noIndexHTML&&noProjectsHTML))
 	{
 		
 		if(lang=="en")
