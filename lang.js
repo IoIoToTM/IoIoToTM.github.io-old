@@ -8,6 +8,10 @@ languages = ' [ {"index":{"en":{"Home":"Home","Projects":"Projects","About me":"
 	if(language==null)
 	{
 		var url = location.href.substring(0,location.href.indexOf("?"));
+		if(url == "http://ioiototm.github.io/")
+		{
+			url+="index.html"
+		}
 		url+="?lang=en";
 		language = "en";
 		window.history.pushState("","",url);
