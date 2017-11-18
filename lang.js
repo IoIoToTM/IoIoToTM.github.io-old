@@ -5,18 +5,17 @@ languages = ' [ {"index":{"en":{"Home":"Home","Projects":"Projects","About me":"
 	var language = getQueryVariable("lang");
 
 	var obj = JSON.parse(languages)[0];
+	var url = location.href.substring(0,location.href.indexOf("?"));
+	
+
 	if(language==null)
 	{
-		var url = location.href.substring(0,location.href.indexOf("?"));
-		if(url == "http://ioiototm.github.io/")
-		{
-			url+="index.html"
-		}
 		url+="?lang=en";
 		language = "en";
-		window.history.pushState("","",url);
+		
 	}
-	
+
+	window.history.pushState("","",url);
 	displayLanguage(language);
 
 //function for getting the variables form the URL
@@ -43,8 +42,9 @@ function displayLanguage(lang)
 	fixButtonLanguage(lang);
 	fixLanguageSelector(lang);
 
-	if(url_name=="index")
+	if(url_name=="index"|| url_name=="")
 	{
+		
 		if(lang=="en")
 		{
 			document.getElementById("aboutMe").innerHTML= obj.index.en["About me"];
