@@ -2,7 +2,7 @@
 var tryMe = function()
 {
 	var iframe = document.createElement('iframe');
-	var insertAfter = document.getElementById("PhysicsSquare");
+	var insertAfter = document.getElementById("PhysicsSquareTryIt");
 	if(document.getElementById("ps")===null)
 	{
 		iframe.setAttribute("id", "ps");

@@ -2,96 +2,88 @@ languages = ' [ {"index":{"en":{"Home":"Home","Projects":"Projects","About me":"
 
 //I'm well aware this is not how you should do it and it's a very clunky way to do it, but it's still a way 
 
-	var language = getQueryVariable("lang");
+var language = getQueryVariable("lang");
 
-	var obj = JSON.parse(languages)[0];
-	
-	
+var obj = JSON.parse(languages)[0];
 
-	if(language==null)
-	{
-		var url = location.href.substring(0,location.href.indexOf("?"));
-		url+="?lang=en";
-		language = "en";
-		window.history.pushState("","",url);
-		
-	}
 
-	
-	displayLanguage(language);
+
+if (language == null) {
+	var url = location.href.substring(0, location.href.indexOf("?"));
+	url += "?lang=en";
+	language = "en";
+	window.history.pushState("", "", url);
+
+}
+
+
+displayLanguage(language);
 
 //function for getting the variables form the URL
 function getQueryVariable(variable) {
-  var query = window.location.search.substring(1);
-  var vars = query.split("&");
-  for (var i=0;i<vars.length;i++) {
-    var pair = vars[i].split("=");
-    if (pair[0] == variable) {
-      return pair[1];
-    }
-  } 
-  return null;
+	var query = window.location.search.substring(1);
+	var vars = query.split("&");
+	for (var i = 0; i < vars.length; i++) {
+		var pair = vars[i].split("=");
+		if (pair[0] == variable) {
+			return pair[1];
+		}
+	}
+	return null;
 }
 
 //function for displaying the passed language
-function displayLanguage(lang)
-{
+function displayLanguage(lang) {
 	var url = location.href;
 	var url_tokens = url.split("/");
-	var url_name = url_tokens[url_tokens.length-1].split(".")[0];
+	var url_name = url_tokens[url_tokens.length - 1].split(".")[0];
 
-	var noIndexHTML = url.indexOf("index")<0;
-	var noProjectsHTML = url.indexOf("projects")<0;
+	var noIndexHTML = url.indexOf("index") < 0;
+	var noProjectsHTML = url.indexOf("projects") < 0;
 
 
 	fixButtonLanguage(lang);
 	fixLanguageSelector(lang);
 
-	if(url_name=="index" || (noIndexHTML&&noProjectsHTML))
-	{
-		
-		if(lang=="en")
-		{
-			document.getElementById("aboutMe").innerHTML= obj.index.en["About me"];
-			document.getElementById("description").innerHTML= obj.index.en["Description"];
-			document.getElementById("PersonalSkills").innerHTML= obj.index.en["PersonalSkills"];
-			document.getElementById("programming").innerHTML= obj.index.en.Skills["Programming"];
-			document.getElementById("programmingDesc").innerHTML= obj.index.en.Skills["progDesc"];
-			document.getElementById("IT").innerHTML= obj.index.en.Skills["IT"];
-			document.getElementById("ITDesc").innerHTML= obj.index.en.Skills["ITDesc"];
-			document.getElementById("Languages").innerHTML= obj.index.en.Skills["Languages"];
-			document.getElementById("LangDesc").innerHTML= obj.index.en.Skills["LangDesc"];
-			document.getElementById("Interests").innerHTML= obj.index.en["Interests"];
-			document.getElementById("Technology").innerHTML= obj.index.en.InterestsList["Technology"];
-			document.getElementById("TechnologyDesc").innerHTML= obj.index.en.InterestsList["TechnologyDesc"];
-			document.getElementById("Music").innerHTML= obj.index.en.InterestsList["Music"];
-			document.getElementById("MusicDesc").innerHTML= obj.index.en.InterestsList["MusicDesc"];
-			document.getElementById("GameDev").innerHTML= obj.index.en.InterestsList["GameDev"];
-			document.getElementById("GameDevDesc").innerHTML= obj.index.en.InterestsList["GameDevDesc"];
-			document.getElementById("Electronics").innerHTML= obj.index.en.InterestsList["Electronics"];
-			document.getElementById("ElectronicsDesc").innerHTML= obj.index.en.InterestsList["ElectronicsDesc"];
+	if (url_name == "index" || (noIndexHTML && noProjectsHTML)) {
+
+		if (lang == "en") {
+			document.getElementById("aboutMe").innerHTML = obj.index.en["About me"];
+			document.getElementById("description").innerHTML = obj.index.en["Description"];
+			document.getElementById("PersonalSkills").innerHTML = obj.index.en["PersonalSkills"];
+			document.getElementById("programming").innerHTML = obj.index.en.Skills["Programming"];
+			document.getElementById("programmingDesc").innerHTML = obj.index.en.Skills["progDesc"];
+			document.getElementById("IT").innerHTML = obj.index.en.Skills["IT"];
+			document.getElementById("ITDesc").innerHTML = obj.index.en.Skills["ITDesc"];
+			document.getElementById("Languages").innerHTML = obj.index.en.Skills["Languages"];
+			document.getElementById("LangDesc").innerHTML = obj.index.en.Skills["LangDesc"];
+			document.getElementById("Interests").innerHTML = obj.index.en["Interests"];
+			document.getElementById("Technology").innerHTML = obj.index.en.InterestsList["Technology"];
+			document.getElementById("TechnologyDesc").innerHTML = obj.index.en.InterestsList["TechnologyDesc"];
+			document.getElementById("Music").innerHTML = obj.index.en.InterestsList["Music"];
+			document.getElementById("MusicDesc").innerHTML = obj.index.en.InterestsList["MusicDesc"];
+			document.getElementById("GameDev").innerHTML = obj.index.en.InterestsList["GameDev"];
+			document.getElementById("GameDevDesc").innerHTML = obj.index.en.InterestsList["GameDevDesc"];
+			document.getElementById("Electronics").innerHTML = obj.index.en.InterestsList["Electronics"];
+			document.getElementById("ElectronicsDesc").innerHTML = obj.index.en.InterestsList["ElectronicsDesc"];
 
 			return;
 		}
-		if(lang=="bg")
-		{
-			document.getElementById("aboutMe").innerHTML= obj.index.bg["About me"];
-			document.getElementById("description").innerHTML= obj.index.bg["Description"];
+		if (lang == "bg") {
+			document.getElementById("aboutMe").innerHTML = obj.index.bg["About me"];
+			document.getElementById("description").innerHTML = obj.index.bg["Description"];
 			return;
 		}
 		return;
 	}
-	if(url_name=="projects")
-	{
-		if(lang=="en")
-		{
+	if (url_name == "projects") {
+		if (lang == "en") {
 			document.getElementById("projectHeading").innerHTML = obj.Projects.en["Projects"];
 			document.getElementById("ImageTransformDesc").innerHTML = obj.Projects.en["ImageTransformDesc"];
 			document.getElementById("DoilyDesc").innerHTML = obj.Projects.en["DoilyDesc"];
 			document.getElementById("PhysicsSquare").innerHTML = obj.Projects.en["PhysicsSquare"];
 		}
-		if(lang=="bg")
-		{
+		if (lang == "bg") {
 			document.getElementById("projectHeading").innerHTML = obj.Projects.bg["Projects"];
 			document.getElementById("DoilyDesc").innerHTML = obj.Projects.bg["DoilyDesc"];
 			document.getElementById("PhysicsSquare").innerHTML = obj.Projects.bg["PhysicsSquare"];
@@ -99,28 +91,24 @@ function displayLanguage(lang)
 	}
 }
 
-function fixButtonLanguage(language)
-{
-	if(language=="en")
-	{
-			document.getElementById("Home").innerHTML= obj.index.en["Home"];
-			document.getElementById("Home").href = "index.html?lang=en";
+function fixButtonLanguage(language) {
+	if (language == "en") {
+		document.getElementById("Home").innerHTML = obj.index.en["Home"];
+		document.getElementById("Home").href = "index.html?lang=en";
 
 
-			document.getElementById("Projects").innerHTML= obj.index.en["Projects"];
-			document.getElementById("Projects").href = "projects.html?lang=en";
+		document.getElementById("Projects").innerHTML = obj.index.en["Projects"];
+		document.getElementById("Projects").href = "projects.html?lang=en";
 	}
-	if(language=="bg")
-	{
-			document.getElementById("Home").innerHTML= obj.index.bg["Home"];
-			document.getElementById("Home").href = "index.html?lang=bg";
+	if (language == "bg") {
+		document.getElementById("Home").innerHTML = obj.index.bg["Home"];
+		document.getElementById("Home").href = "index.html?lang=bg";
 
-			document.getElementById("Projects").innerHTML= obj.index.bg["Projects"];
-			document.getElementById("Projects").href = "projects.html?lang=bg";
+		document.getElementById("Projects").innerHTML = obj.index.bg["Projects"];
+		document.getElementById("Projects").href = "projects.html?lang=bg";
 	}
 }
-function fixLanguageSelector(language)
-{
+function fixLanguageSelector(language) {
 	/*if(language=="en")
 	{
 		document.getElementById("languageSelector").innerHTML = "English";

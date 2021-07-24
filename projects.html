@@ -20,13 +20,24 @@
 </head>
 <body>
 	<header>
-		<section class = "page-header">
+				<section class = "page-header">
+
+		 	<!--<div class = "logo"> </div>
+			<!--<div class ="languageSelector" id="languageSelector">
+				<span>test</span>
+				<div class="languageDropdown" id="languageDropdown">
+					<p>ssssss</p>
+				</div>
+				<div style="clear: both; line-height: 0;">&nbsp;</div>
+			</div>-->
 			<h1 class = "username">
 				<img src="files/Logo.png" class="logo">
 			</h1>
-			<div align="center"> 
-			<a href="index.html" id="Home" class="btn"></a>
-			<a href="projects.html" id="Projects" class="btn"></a>
+			<div align="center" id="Menu"> 
+			<a href="index.html" class="btn" id="Home"> Home </a>
+            <a href="research.html" class="btn" id="Research"> Research  </a>
+            <a href="games.html" class="btn" id="Games"> Games  </a>
+			<a href="projects.html" class="btn" id="Projects"> Other projects </a>
 			</div>
 		</section>
 	</header>
@@ -36,8 +47,12 @@
 	<h2 id="projectHeading"></h2>
 
 	<p id = "ImageTransform">
+
+		<h1>ImageTransform</h1>
+		<hr>
 		
 		<div id = "ImageTransformDesc"></div>
+		<a href="https://github.com/IoIoToTM/ImageTransform"> ImageTransform </a> - Done in C++ using SDL, something that I started as a little project and grew to something bigger, with trying to optimize the software rendering as much as I can. I have used a few methods to change an image, but the main algorithm I am testing is for quantization and dithering. You can drag a BMP and it will load it, and then with P or O you can increase or lower number of colors (quantization). I have a few methods that do the same but are there just for benchmarking purposes and seeing what is faster and etc. Testing I have done with up to 8K pictures, and benchmarking how long my CPU proccesses it (techniques I have used include : using cache coherence to minimize cash misses, openMP, multi-threading, SSE and AVX extensions using Intel mnemonics).
 		<div class = "test">
 		<img class = "images" src="media/ImageTransform1.png">
 		<img class = "images" src="media/ImageTransform2.png">
@@ -48,16 +63,34 @@
 	<br>
 
 	<p id="DigitalDoily">
+		<h1>Digital Doily</h1>
+		<hr>
+		<a href="https://github.com/IoIoToTM/Digital-Doily"> Digital Doily </a> - This is actually my first Programming II coursework at the university. 
+		It's basically a <a href="https://en.wikipedia.org/wiki/Doily">Doily</a> maker, with a few options to change color, size of pen, numbers of refelcted sectors and etc.
+		It's written in Java as we're studying that. 
+		(Download JAR file: <a href="files/Digital Doily.jar">Digital Doily.jar</a>)
 	 <div id="DoilyDesc"> </div>
 	 <img src="media/digitaldoily.png">
 	</p>
-	<p id="PhysicsSquare"></p>
+
+	<p id="PhysicsSquare">
+		<h1>Physics Square</h1>
+		<hr>
+		<a href="https://github.com/IoIoToTM/IoIoToTM.github.io/blob/master/PhysicsSquare.html">Physics square</a> is my first try at making something in JavaScript and HTML5. 
+		It's kind of a physics simulation (a very simple one), where you control the red square with the arrow/WASD keys or you can drag it with the mouse, and you can change a few options like gravity, the bouncing coefficient (how much it bounces) and a few other option. 
+		There is also a WebGL link if you move the square to the left bottom corner, which is a little test with 3D animation I wanted to try. 
+		You can try it on this page (click <a href="javascript:void(0)" id='button'>here</a>) or in its original page <a href="PhysicsSquare.html">here</a>.
+	 <div id="PhysicsSquareTryIt"> </div>
+	
+	</p>
+
 	
 	
 	</section>
 
 </body>
-<script type="text/javascript" src="lang.js"></script>
 <script type="text/javascript" src="scripts/javascript.js"></script>
+<!--<script type="text/javascript" src="lang.js"></script>
+-->
 
 </html>
